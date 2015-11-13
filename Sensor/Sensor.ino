@@ -7,7 +7,9 @@ int buttonState = 0;
 enum STATES
 {
   buttonHigh,
-  buttonLow
+  buttonLow,
+  buttonIdle,
+  buttonDebounce
 };
 
 void setup()                    
@@ -28,17 +30,20 @@ void loop()
     while(1)
     {
     
-      switch(state)
-      {
+      switch(state){
+        
         case buttonLow:
           digitalWrite(ledPin, LOW);
           TinyWireS.send(data2);
+          if (buttonState == LOW){
+            
+          }
+          if (buttonState == HIGH) state = buttonDebounce;
+          break;
+        case buttonDebounce:
           
-          switch(state)
-          {
-            case buttonLow:
-              
-              break;
+          
+          
             
             
     
@@ -52,8 +57,7 @@ void loop()
         TinyWireS.send(data1);
         }
      else{
-       digitalWrite(ledPin, LOW);
-       TinyWireS.send(data2);
+       
       }
     delay(1000);
 }

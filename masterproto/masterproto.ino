@@ -24,7 +24,7 @@ void setup()
 
 void i2c_scan_bus()
 {
-  Wire.begin();
+  //Wire.begin();
   for (byte i=1; i<=numberofsensors; i++)
   {
     Wire.beginTransmission (i);
@@ -66,7 +66,7 @@ unsigned long int bitArray2Numeral()
 void bus_Display()
 {
   int nbr_module = 0;
- Wire.begin();
+ //Wire.begin();
  for (int i = 1; i < 127; i++)
  {
    Wire.beginTransmission (i);
@@ -76,7 +76,7 @@ void bus_Display()
      nbr_module++;
    } 
  }
-   delay(500);
+  
    lcd.setCursor(0,0);
    lcd.print(nbr_module,DEC);
    lcd.print("-Module(s)."); 
@@ -85,11 +85,11 @@ void bus_Display()
 
 void loop()
 {
-  bus_Display();
-
+  //bus_Display();
+  Serial.print("fuck");
   i2c_scan_sensors();
   if(bitArray2Numeral() != 0){
-      Serial.println (bitArray2Numeral());
+  Serial.println (bitArray2Numeral());
   }
-  delay(125);
+  delay(1000);
 }
