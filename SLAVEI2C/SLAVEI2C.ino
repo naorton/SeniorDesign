@@ -1,5 +1,5 @@
 #include <TinyWireS.h>
-
+//fuck off
 const int busID = 14;
 const int triggerPin = 3;
 bool triggerState = true;
