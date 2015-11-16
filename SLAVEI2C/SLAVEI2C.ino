@@ -1,19 +1,19 @@
 #include <TinyWireS.h>
-const int busID = 14;
-const int triggerPin = 3;
-bool triggerState = true;
-const int ledPin =  1; 
-const int statemaxCount = 10000;
-int stateCount = 0;
 
+const int busID = 4; // Bus address ID
+const int triggerPin = 3; // Pin on the attiny85 used for sensor trigger
+bool triggerState = true; // Boolean variable passed to master to indicate state of sensor 
+const int ledPin =  1; // Pin on the attiny85 used for sensor trigger led notification
+const int statemaxCount = 10000; // Delay between state change
+int stateCount = 0; // Counter used in state change
 
 void setup()                    
 {
-   pinMode(triggerPin, INPUT);
-   digitalWrite(triggerPin, HIGH);
-   pinMode(ledPin, OUTPUT);
-   TinyWireS.begin(busID);
-   TinyWireS.onRequest(requestEvent);
+   pinMode(triggerPin, INPUT); // Attiny 85 trigger pin set as input
+   digitalWrite(triggerPin, HIGH); // Attiny 85 trigger pin set high, grounding pin triggers state change
+   pinMode(ledPin, OUTPUT); // Attiny85 pin set as output, used for LED notification
+   TinyWireS.begin(busID); // Open connection on bus as slave
+   TinyWireS.onRequest(requestEvent); // Method used on requestFrom call from master
 }
 
 void requestEvent()
