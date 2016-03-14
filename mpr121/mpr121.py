@@ -98,7 +98,7 @@ class MPR121(object):
 
 		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_SOFTRESET, 0x63)
 		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_ECR, 0x00)
-		config = self.read_byte_data(MPR121_I2C_ADDR, MPR121_CONFIG2)
+		config = self.bus.read_byte_data(MPR121_I2C_ADDR, MPR121_CONFIG2)
 		if config != 0x24:
 			return False
 		set_threshold(12, 6) 
