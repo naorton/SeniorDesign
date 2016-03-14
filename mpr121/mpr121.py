@@ -49,7 +49,7 @@ class MPR121(object):
 		#Selects measurement electrodes, from ELE0 to ELE0-11, 12 in total.
 		#If pin = 0 , then the device is put into stop mode.
 
-		assert pin >= 0 and pin <12 'pin must be between 0-11'
+		assert pin >= 0 and pin < 12, 'pin must be between 0-11'
 
 		old_reg = self.bus.read_byte_data(MPR121_I2C_ADDR, MPR121_ECR)
 		new_reg = 0b11110000 | pin		#This line masks the default values for CL and ELEPROX and then ORs it with the 4 bit value for the selected electrodes
@@ -61,7 +61,7 @@ class MPR121(object):
 		#Takes in a pin value to return the touch status. Will return 1 if touched, or 0 if released.
 		#the MSB on register 0x01 is an over current flag(read and write), 1 if over current is detected and 0 for normal conditions.
 
-		assert pin >= 0 and pin <12 'pin must be between 0-11'
+		assert pin >= 0 and pin < 12, 'pin must be between 0-11'
 
 		touch = self.bus.read_word_data(MPR121_I2C_ADDR, MPR121_TOUCHSTATUSL)
 
@@ -71,8 +71,8 @@ class MPR121(object):
 		#This will take in a touch threshold(0-255) and a release threshold(0-255) and write
 		#that value to the appropriate registers for all electrodes.
 
-		assert touch >=0 and touch <=255 'touch threshold must be between 0 and 255'
-		assert release >=0 and release <=255 'release threshold must be between 0 and 255'
+		assert touch >=0 and touch <= 255, 'touch threshold must be between 0 and 255'
+		assert release >=0 and release <= 255, 'release threshold must be between 0 and 255'
 
 		for i in range(12):
 			self.write_byte_data(MPR121_I2C_ADDR, MPR121_TOUCHTH_0 + 2*i, touch)
