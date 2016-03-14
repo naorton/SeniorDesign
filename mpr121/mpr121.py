@@ -89,36 +89,36 @@ class MPR121(object):
 		assert release >=0 and release <= 255, 'release threshold must be between 0 and 255'
 
 		for i in range(12):
-			self.write_byte_data(MPR121_I2C_ADDR, MPR121_TOUCHTH_0 + 2*i, touch)
-			self.write_byte_data(MPR121_I2C_ADDR, MPR121_RELEASETH_0 + 2*i, release)
+			self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_TOUCHTH_0 + 2*i, touch)
+			self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_RELEASETH_0 + 2*i, release)
 
 	def set_config(self):
 		#This will check if CDT, SFI, and ESI are all set to default values. It will also
 		#set thresholds, and make sure the device is ready to be put into start mode. 
 
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_SOFTRESET, 0x63)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_ECR, 0x00)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_SOFTRESET, 0x63)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_ECR, 0x00)
 		config = self.read_byte_data(MPR121_I2C_ADDR, MPR121_CONFIG2)
 		if config != 0x24:
 			return False
 		set_threshold(12, 6) 
 		#set baseline filtering control registers
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_MHDR, 0x01)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_NHDR, 0x01)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_NCLR, 0x0E)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_FDLR, 0x00)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_MHDF, 0x01)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_NHDF, 0x05)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_NCLF, 0x01)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_FDLF, 0x00)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_NHDT, 0x00)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_NCLT, 0x00)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_FDLT, 0x00)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_MHDR, 0x01)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_NHDR, 0x01)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_NCLR, 0x0E)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_FDLR, 0x00)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_MHDF, 0x01)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_NHDF, 0x05)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_NCLF, 0x01)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_FDLF, 0x00)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_NHDT, 0x00)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_NCLT, 0x00)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_FDLT, 0x00)
 		#sets debounce, config1, and config2.
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_DEBOUNCE, 0)
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_CONFIG1, 0x10)#default, 16uA charge current
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_CONFIG2, 0x20)# 0.5uS encoding, 1ms period
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_DEBOUNCE, 0)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_CONFIG1, 0x10)#default, 16uA charge current
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_CONFIG2, 0x20)# 0.5uS encoding, 1ms period
 		#enable electrode 0
-		self.write_byte_data(MPR121_I2C_ADDR, MPR121_ECR, 0x81)
+		self.bus.write_byte_data(MPR121_I2C_ADDR, MPR121_ECR, 0x81)
 		return True
 
