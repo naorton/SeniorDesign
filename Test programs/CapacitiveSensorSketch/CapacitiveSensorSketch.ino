@@ -7,13 +7,15 @@
  * Resistor effects sensitivity, experiment with values, 50K - 50M. Larger resistor values yield larger sensor values.
  * Receive pin is the sensor pin - try different amounts of foil/metal on this pin
  */
-int RED_PIN = 6;
+int RED_PIN = 1;
+int csTolerance = 1000;
 
-CapacitiveSensor   cs_4_2 = CapacitiveSensor(4,2);        // 10M resistor between pins 4 & 2, pin 2 is sensor pin, add a wire and or foil if desired
+CapacitiveSensor cs_4_2 = CapacitiveSensor(4,2);        // 10M resistor between pins 4 & 2, pin 2 is sensor pin, add a wire and or foil if desired
 
 void setup()                    
 {
-   cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 1 - just as an example
+   cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF);   // turn off autocalibrate on channel 1 - just as an example
+   pinMode(RED_PIN, OUTPUT);
    Serial.begin(9600);
 }
 
@@ -25,10 +27,10 @@ void loop()
     Serial.print(millis() - start);        // check on performance in milliseconds
     Serial.print("\t");                    // tab character for debug windown spacing
 
-    if(total1>300){
-      digitalWrite(RED_PIN, HIGH);
-    } else{
+    if(total1>csTolerance){
       digitalWrite(RED_PIN, LOW);
+    } else{
+      digitalWrite(RED_PIN, HIGH);
       }
     
     Serial.print(total1);                  // print sensor output 1

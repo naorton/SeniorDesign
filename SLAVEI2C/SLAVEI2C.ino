@@ -1,10 +1,10 @@
 #include <TinyWireS.h>
 
-const int busID = 4; // Bus address ID
+const int busID = 9; // Bus address ID
 const int triggerPin = 3; // Pin on the attiny85 used for sensor trigger
 bool triggerState = true; // Boolean variable passed to master to indicate state of sensor 
 const int ledPin =  1; // Pin on the attiny85 used for sensor trigger led notification
-const int statemaxCount = 10000; // Delay between state change
+const int statemaxCount = 5000; // Delay between state change
 int stateCount = 0; // Counter used in state change
 
 void setup()                    

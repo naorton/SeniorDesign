@@ -7,7 +7,6 @@ String sensorState; // String containing the state of all sensors (eg. ten senso
 
 void setup()
 {
-  delay(2000); // Delay processing for 1 second
   Serial.begin(115200);
   
   // Zero out arrays
@@ -72,5 +71,5 @@ void loop()
     Serial.println(string); // String with active sensors sent to usb serial bus
     sensorState = string;
   }
-  delay(125); // One-sixteenth of a second delay
+  //delay(125); // One-sixteenth of a second delay
 }
