@@ -7,11 +7,13 @@ print 'Press Ctrl-C to quit'
 
 while True:
 
-	for i in xrange(0, 255):
-		bus.write_byte(i,1)
-		time.sleep(.1)
-		data = bus.read_byte(i)
-		print data
+	for device in range(128):
+
+		try:
+			bus.read_byte(device)
+			print(hex(device))
+		except:
+			pass
 
 	address = input('Enter an address: ')
 	command = input('Enter command: ')
