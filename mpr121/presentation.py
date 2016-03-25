@@ -5,14 +5,6 @@ bus = smbus.SMBus(1)
 
 print 'Press Ctrl-C to quit'
 
-for device in range(128):
-	time.sleep(.1)
-	try:
-		bus.read_byte(device)
-		print(hex(device))
-	except:
-		pass
-
 while True:
 
 	address = input('Enter an address: ')
