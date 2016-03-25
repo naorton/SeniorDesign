@@ -17,7 +17,7 @@ while True:
 		device_addr = bus.read_byte(address)
 		print device_addr
 
-	else if command == 2:
+	elif command == 2:
 
 		bus.write_byte(address, command)
 		time.sleep(.3)
