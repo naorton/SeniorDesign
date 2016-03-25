@@ -12,4 +12,4 @@ while True:
 	bus.write_byte(address,blink)
 	#data = bus.read_byte(address)
 
-	print data	
+	#print data	
