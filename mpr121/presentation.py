@@ -10,8 +10,14 @@ while True:
 	address = input('Enter an address: ')
 	command = input('Enter command: ')
 
-	bus.write_byte(address,command)
-	time.sleep(.3)
-	device_addr = bus.read_byte(address)
+	if command == 1:
 
-	print device_addr
+		bus.write_byte(address,command)
+		time.sleep(.3)
+		device_addr = bus.read_byte(address)
+		print device_addr
+
+	else if command == 2:
+
+		bus.write_byte(address, command)
+		time.sleep(.3)
