@@ -7,9 +7,10 @@ print 'Press Ctrl-C to quit'
 
 while True:
 	address = input('Enter an address: ')
-	blink = input('Enter the number of led blinks: ')
+	command = input('Enter command: ')
 
-	bus.write_byte(address,blink)
-	#data = bus.read_byte(address)
+	bus.write_byte(address,command)
+	time.sleep(1)
+	data = bus.read_byte(address)
 
-	#print data	
+	print data	
