@@ -5,13 +5,13 @@ bus = smbus.SMBus(1)
 
 print 'Press Ctrl-C to quit'
 
-	for device in range(128):
+for device in range(128):
 
-		try:
-			bus.read_byte(device)
-			print(hex(device))
-		except:
-			pass
+	try:
+		bus.read_byte(device)
+		print(hex(device))
+	except:
+		pass
 
 while True:
 
