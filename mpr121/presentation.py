@@ -1,4 +1,5 @@
 import smbus
+import time
 
 bus = smbus.SMBus(1)
 
@@ -9,5 +10,6 @@ while True:
 	blink = input('Enter the number of led blinks: ')
 
 	bus.write_byte(address,blink)
-	data = bus.read_byte(address)
+	#data = bus.read_byte(address)
+
 	print data	
