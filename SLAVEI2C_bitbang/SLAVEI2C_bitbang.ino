@@ -14,23 +14,22 @@
 #define I2C_CLOCK_LO() I2C_DDR |=  ( 1 << I2C_CLK );
 bool I2C_started = false;
 
-#define busID 3 // eBus address ID
+//#define busID 10 // eBus address ID
 //#define triggerPin 3 // Pin on the attiny85 used for sensor trigger
 //bool triggerState = true; // Boolean variable passed to master to indicate state of sensor 
 #define ledPin 3 // Pin on the attiny85 used for sensor trigger led notification
-//#define ledPinb 2
-#define statemaxCount 50 // Delay between state change
+#define ledPinb 2
+#define statemaxCount 10000 // Delay between state change
 int stateCount = 0; // Counter used in state change
 
 void setup()                    
 {
    //pinMode(triggerPin, INPUT); // Attiny 85 trigger pin set as input
    //digitalWrite(triggerPin, HIGH); // Attiny 85 trigger pin set high, grounding pin triggers state change
-  I2C_Init();
   pinMode(ledPin, OUTPUT); // Attiny85 pin set as output, used for LED notification
-  //pinMode(ledPinb, OUTPUT);
+  pinMode(ledPinb, OUTPUT);
   digitalWrite(ledPin, LOW);
-  //digitalWrite(ledPinb, LOW);
+  digitalWrite(ledPinb, LOW);
   //TinyWireS.begin(busID); // Open connection on bus as slave
   //TinyWireS.onRequest(requestEvent); // Method used on requestFrom call from master
 }
@@ -45,11 +44,22 @@ void setup()
 
 void loop()       
 {
-  I2C_Write_Byte(1,0,9);
-  unsigned char c = I2C_Read_Byte(0,1);
-  digitalWrite(ledPin, LOW);
-  digitalWrite(ledPinb, LOW);
-  delay(10000);
+  I2C_Init();
+  delay(1000);
+  I2C_Write_Byte(1,0,19);
+  unsigned char c = I2C_Read_Byte(1,1);
+  if(c == 0x01){
+    digitalWrite(ledPinb, HIGH);
+    digitalWrite(ledPin, LOW);
+  }
+  else if(c == 0x00){
+    digitalWrite(ledPinb, LOW);
+    digitalWrite(ledPin, HIGH);
+  }
+  else{
+    digitalWrite(ledPinb, HIGH);
+    digitalWrite(ledPin, HIGH);
+  }
 }
 
 // Inits bitbanging port, must be called before using the functions below
@@ -63,11 +73,11 @@ void I2C_Init()
   I2C_delay();
 }
 
-bool I2C_Start_Cond(void)
+void I2C_Start_Cond(void)
 {
   if(I2C_started)
   {
-    // If started, do a restart condition.  Set SDA to 1
+    // If started, do a restart cond set SDA to 1
     I2C_DATA_HI();
     I2C_delay();
 
@@ -75,24 +85,17 @@ bool I2C_Start_Cond(void)
     int count = 0;
     while ((I2C_PIN & (1 << I2C_CLK)) == 0 && (count < statemaxCount))
       count++;
-    if(count == statemaxCount)
-      return false;
 
     I2C_delay();
   }
 
-  // SCL is high, set SDA from 1 to 0
   I2C_DATA_LO();
   I2C_delay();
   I2C_CLOCK_LO();
-  I2C_delay();
-
   I2C_started = true;
-
-  return true;
 }
 
-bool I2C_Stop_Cond(void)
+void I2C_Stop_Cond(void)
 {
   // Set SDA to 0
   I2C_DATA_LO();
@@ -102,8 +105,6 @@ bool I2C_Stop_Cond(void)
   int count = 0;
   while ((I2C_PIN & (1 << I2C_CLK)) == 0 && (count < statemaxCount))
     count++;
-  if(count == statemaxCount)
-    return false;
       
   // Stop bit setup time, minimum 4 microseconds
   I2C_delay();
@@ -112,13 +113,12 @@ bool I2C_Stop_Cond(void)
   I2C_DATA_HI();
   I2C_delay();
 
+  I2C_delay();
   I2C_started = false;
-
-  return true;
 }
 
 // Write a bit to I2C bus
-bool I2C_Write_Bit(bool b)
+void I2C_Write_Bit(bool b)
 {
   if(b)
   {
@@ -142,13 +142,9 @@ bool I2C_Write_Bit(bool b)
   int count = 0;
   while ((I2C_PIN & (1 << I2C_CLK)) == 0 && (count < statemaxCount))
     count++;
-  if(count == statemaxCount)
-    return false;
       
   // Clear the SCL to low in preparation for next change
   I2C_CLOCK_LO();
-
-  return true;
 }
 
 // Read a bit from I2C bus
@@ -179,7 +175,6 @@ bool I2C_Read_Bit(void)
 
   // Set SCL low in preparation for next operation
   I2C_CLOCK_LO();
-  I2C_delay();
 
   return b;
 }
@@ -201,6 +196,8 @@ bool I2C_Write_Byte(bool send_start, bool send_stop, unsigned char c)
   }
 
   nack = I2C_Read_Bit();
+  //if(nack)
+  //  send_stop = true;
   
   if(send_stop)
   {
@@ -220,6 +217,10 @@ unsigned char I2C_Read_Byte(bool nack, bool send_stop)
     res = (res << 1) | I2C_Read_Bit();   
   }
 
+  //I2C_Read_Bit();
+  //if(I2C_Read_Bit())
+  //  send_stop = true;
+
   I2C_Write_Bit(nack);
 
   if(send_stop)
@@ -233,5 +234,5 @@ unsigned char I2C_Read_Byte(bool nack, bool send_stop)
 void I2C_delay(void)
 {
   //delay(1000);
-  delayMicroseconds(5);
+  delayMicroseconds(1000);
 }
