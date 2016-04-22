@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 
 bus = smbus.SMBus(1)
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(4, GPIO.OUT)
+GPIO.setup(7, GPIO.OUT)
 
 
 bus = smbus.SMBus(1)
@@ -17,6 +17,6 @@ while True:
 
     if device_output == 1:
     	print device_output
-    	GPIO.setup(4, GPIO.HIGH)
+    	GPIO.setup(7, GPIO.HIGH)
     	time.sleep(.5)
-    	GPIO.setup(4, GPIO.LOW)
+    	GPIO.setup(7, GPIO.LOW)
