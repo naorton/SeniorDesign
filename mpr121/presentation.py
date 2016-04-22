@@ -7,17 +7,6 @@ print 'Press Ctrl-C to quit'
 
 while True:
 
-	address = input('Enter an address: ')
-	command = input('Enter command: ')
-
-	if command == 1:
-
-		bus.write_byte(address,command)
-		time.sleep(.3)
-		device_addr = bus.read_byte(address)
+		device_addr = bus.read_byte(0x9)
 		print device_addr
-
-	elif command == 2:
-
-		bus.write_byte(address, command)
-		time.sleep(.3)
+		time.sleep(.5)
