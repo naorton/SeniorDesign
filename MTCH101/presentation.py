@@ -3,7 +3,7 @@ import time
 import RPi.GPIO as GPIO
 
 bus = smbus.SMBus(1)
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.OUT)
 
 
