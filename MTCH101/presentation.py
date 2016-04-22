@@ -16,6 +16,9 @@ while True:
 
     device_addr = bus.read_byte(0x9)
     print device_addr
-    GPIO.setup(17, GPIO.HIGH)
-    time.sleep(.5)
-    GPIO.setup(17, GPIO.LOW)
+
+    if device_addr == 1:
+
+    	GPIO.setup(17, GPIO.HIGH)
+    	time.sleep(.5)
+    	GPIO.setup(17, GPIO.LOW)
