@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <link href="bootstrapcss" rel="stylesheet">
+    <script src="bootstrapjs" type="text/javascript"></script>
+<head>
+	<script src="jquery-latest.min.js"></script>
+	<script>
+		$.fn.formToJSON = function() {
+			var obj = {"product": []};
+			var product = document.getElementsByName("product");
+			var cost = document.getElementsByName("cost");
+			for(i = 0; i < product.length; i++){
+				if(cost[i].value === ""){
+					obj.product.push(product[i].value);
+				}
+				else{
+					obj.product.push(product[i].value + ", $" + cost[i].value);
+				}
+			}
+			return JSON.stringify(obj);
+		};
+		$(document).ready(function(){
+			$('#input').click(function() {
+				event.preventDefault();
+				var send = $("#form").formToJSON();
+				console.log(send);
+				$.ajax({
+					url: "http://192.168.11.49:3000/",
+					contentType: "application/json; charset=utf-8",
+					//dataType: "json",
+					type: "POST",
+					data: send,
+					error: function(xhr, error) {
+						alert('Error!  Status = ' + xhr.status + ' Message = ' + error);
+					},
+					success: function(data) {
+						alert("success");
+					}
+				});
+				return false; 
+			});
+		});
+	</script>
+</head>
+<body>
+
+<form id="form" enctype='application/json'>
+A0: <input type="text" name="product" value="Cheetos Crunchy">  $<input type="text" name="cost" value="1.00"><br>
+A2: <input type="text" name="product" value="Sun Chips Harvest Cheddar">  $<input type="text" name="cost" value="1.00"><br>
+A4: <input type="text" name="product" value="Lay's Original">  $<input type="text" name="cost" value="1.00"><br>
+A6: <input type="text" name="product" value="Lay's Original">  $<input type="text" name="cost" value="1.00"><br>
+A8: <input type="text" name="product" value="Doritos Nacho Cheese">  $<input type="text" name="cost" value="1.00"><br>
+B0: <input type="text" name="product" value="Jack Link's Tender Bites Original">  $<input type="text" name="cost" value="2.00"><br>
+B2: <input type="text" name="product" value="Ruffles Original">  $<input type="text" name="cost" value="1.00"><br>
+B4: <input type="text" name="product" value="Ruffles Original">  $<input type="text" name="cost" value="1.00"><br>
+B6: <input type="text" name="product" value="Fritos Chili Cheese">  $<input type="text" name="cost" value="1.00"><br>
+B8: <input type="text" name="product" value="Bugles Ranch">  $<input type="text" name="cost" value="1.00"><br>
+<input class="btn btn-danger" id="input" name="submit" type="submit" value="Update">
+</form>
+
+<p>Click the "Update" button to update the vending machine inventory.</p>
+
+</body>
+</html>
