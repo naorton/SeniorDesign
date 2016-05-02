@@ -24,8 +24,6 @@ while True:
 
 	for address in sensorLocation:
 
-		initial_output = sensor_read(address)
-
 		if sensor_read(address) == 1:
 			#debounce
 			for i in range(5):
