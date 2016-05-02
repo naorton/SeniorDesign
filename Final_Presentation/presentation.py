@@ -23,7 +23,7 @@ while True:
 
 	for sensor in sensorLocation:
 
-		sensor_output = bus.read_byte(hex(sensor))
+		sensor_output = bus.read_byte(sensor)
 
 		if sensor_output == 1:
 			requests.get('http://raspberrypi/locations/%s' % (sensorLocation[sensor]))
