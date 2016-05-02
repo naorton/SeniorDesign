@@ -15,8 +15,6 @@ bus = smbus.SMBus(1)
 #GPIO.setwarnings(False)
 #GPIO.setup(4, GPIO.OUT)
 
-bus = smbus.SMBus(1)
-
 print 'Press Ctrl-C to quit'
 
 while True:
