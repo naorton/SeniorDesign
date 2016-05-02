@@ -23,6 +23,7 @@ def sensorRead(address):
 	try:
 		reading = bus.read_byte(address)
 	except:
+		reading = 0
 		pass
 	return reading	
 
