@@ -1,7 +1,5 @@
 import smbus
-import time
 import requests
-#import RPi.GPIO as GPIO
 
 
 sensorLocation = {
@@ -14,9 +12,6 @@ sensorLocation = {
 }
 
 bus = smbus.SMBus(1)
-#GPIO.setmode(GPIO.BCM)
-#GPIO.setwarnings(False)
-#GPIO.setup(4, GPIO.OUT)
 
 def sensorRead(address):
 
@@ -39,7 +34,6 @@ while True:
 			#debounce
 			for i in range(5):
 				data = sensorRead(address)
-				print data
 			if data == 0:
 				break
 			elif data == 1:
