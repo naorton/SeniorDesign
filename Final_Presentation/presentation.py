@@ -21,10 +21,10 @@ bus = smbus.SMBus(1)
 def sensorRead(address):
 
 	try:
-		data = bus.read_byte(address)
+		reading = bus.read_byte(address)
 	except:
 		pass
-	return data	
+	return reading	
 
 print 'Press Ctrl-C to quit'
 
