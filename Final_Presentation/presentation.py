@@ -17,7 +17,7 @@ bus = smbus.SMBus(1)
 #GPIO.setmode(GPIO.BCM)
 #GPIO.setwarnings(False)
 #GPIO.setup(4, GPIO.OUT)
-global = reading
+global reading
 
 def sensorRead(address):
 
