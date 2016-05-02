@@ -6,21 +6,12 @@ var json_path= './vending.json';
 
 app.use(bodyParser.json());
 
+app.use('/config', express.static(__dirname + '/public'));
+app.use('/static', express.static(__dirname + '/static'));
+
 app.get('/', function (req, res) {
 	console.dir(jsonfile.readFileSync(json_path));
 	res.send(jsonfile.readFileSync(json_path));
-});
-
-app.get('/config', function (req, res) {
-	res.sendFile(__dirname + '/vending.html');
-});
-
-app.get('/bootstrapcss', function(req, res) {
-  res.sendFile(__dirname + '/boot/css/bootstrap.min.css')
-});
-
-app.get('/bootstrapjs', function(req, res) {
-  res.sendFile(__dirname + '/boot/js/bootstrap.min.js')
 });
 
 app.post('/', function (req, res) {
@@ -33,6 +24,13 @@ app.post('/', function (req, res) {
   }
 });
 
-app.listen(3000, function () {
-  console.log('Data interpreter listening on port 3000!');
+app.get('/locations/:id', function(req, res) {
+  res.send("location: " + req.params.id);
+  console.log(req.params.id)
+  // Fetch product from database using location id
+  // Use TTS library to "speak" product name and price
+});
+
+app.listen(80, function () {
+  console.log('Data interpreter listening on port 80!');
 });

@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
-    <link href="bootstrapcss" rel="stylesheet">
-    <script src="bootstrapjs" type="text/javascript"></script>
 <head>
-	<script src="jquery-latest.min.js"></script>
+	<script src="/static/jquery.min.js"></script>
 	<script>
 		$.fn.formToJSON = function() {
 			var obj = {"product": []};
@@ -25,7 +23,7 @@
 				var send = $("#form").formToJSON();
 				console.log(send);
 				$.ajax({
-					url: "http://192.168.11.49:3000/",
+					url: "/",
 					contentType: "application/json; charset=utf-8",
 					//dataType: "json",
 					type: "POST",
