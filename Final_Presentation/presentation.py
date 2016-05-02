@@ -24,22 +24,22 @@ while True:
 
 	for address in sensorLocation:
 
-		if sensor_read(address) == 1:
+		if sensorRead(address) == 1:
 			#debounce
 			for i in range(5):
-				data = sensor_read(address)
+				data = sensorRead(address)
 				print data
 			if data == 0:
 				break
 			elif data == 1:
 				print sensorLocation[address]
 				requests.get('http://raspberrypi/locations/%s' % (sensorLocation[address]))
-				while sensor_read(address) == 1:
+				while sensorRead(address) == 1:
 					pass
 
     	
 
-def sensor_read(address):
+def sensorRead(address):
 
 	try:
 		data = bus.read_byte(address)
