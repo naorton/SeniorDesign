@@ -36,7 +36,7 @@ while True:
 			elif data == 1:
 				print sensorLocation[address]
 				requests.get('http://raspberrypi/locations/%s' % (sensorLocation[address]))
-				while sensor_read(address) == 1
+				while sensor_read(address) == 1:
 					pass
 
     	
