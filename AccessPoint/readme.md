@@ -1,4 +1,4 @@
-## /etc/iptables ##
+## /etc/iptables.ipv4.nat ##
 This files has the masquerading rules needed for NATing out traffic
 
 ## /etc/network/if-up.d/iptables ##
