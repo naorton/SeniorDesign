@@ -4,10 +4,10 @@ import requests
 #import RPi.GPIO as GPIO
 
 sensorLocation = {
-		'0x09' : 'A0',
-		'0x10' : 'A2',
-		'0x11' : 'A4',
-		'0x12' : 'A8',	
+		 0x09 : 'A0',
+		 0x10 : 'A2',
+		 0x11 : 'A4',
+		 0x12 : 'A8',	
 }
 
 bus = smbus.SMBus(1)
