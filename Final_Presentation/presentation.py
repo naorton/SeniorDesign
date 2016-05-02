@@ -17,7 +17,6 @@ bus = smbus.SMBus(1)
 #GPIO.setmode(GPIO.BCM)
 #GPIO.setwarnings(False)
 #GPIO.setup(4, GPIO.OUT)
-global reading
 
 def sensorRead(address):
 
@@ -33,7 +32,9 @@ while True:
 
 	for address in sensorLocation:
 
-		if sensorRead(address) == 1:
+		initial = sensorRead(address)
+
+		if initial == 1:
 			#debounce
 			for i in range(5):
 				data = sensorRead(address)
