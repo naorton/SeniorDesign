@@ -28,6 +28,7 @@ while True:
 			pass
 
 		if sensor_output == 1:
+			print sensorLocation[sensor]
 			requests.get('http://raspberrypi/locations/%s' % (sensorLocation[sensor]))
     	
 
