@@ -3,12 +3,14 @@ import time
 import requests
 #import RPi.GPIO as GPIO
 
+
 sensorLocation = {
 
 		 0x09 : 'A0',
 		 0x0A : 'A2',
 		 0x0B : 'A4',
 		 0x0C : 'A6'
+
 }
 
 bus = smbus.SMBus(1)
@@ -20,16 +22,33 @@ print 'Press Ctrl-C to quit'
 
 while True:
 
-	for sensor in sensorLocation:
+	for address in sensorLocation:
 
-		try:
-			sensor_output = bus.read_byte(sensor)
-		except:
-			pass
+		initial_output = sensor_read(address)
 
-		if sensor_output == 1:
-			print sensorLocation[sensor]
-			requests.get('http://raspberrypi/locations/%s' % (sensorLocation[sensor]))
-			sensor_output = 0
+		if sensor_read(address) == 1:
+			#debounce
+			for i in range(5):
+				data = sensor_read(address)
+				print data
+			if data == 0:
+				break
+			elif data == 1:
+				print sensorLocation[address]
+				requests.get('http://raspberrypi/locations/%s' % (sensorLocation[address]))
+				while sensor_read(address) == 1
+					pass
+
     	
+
+def sensor_read(address):
+
+	try:
+		data = bus.read_byte(address)
+	except:
+		pass
+	return data	
+
+
+
 
