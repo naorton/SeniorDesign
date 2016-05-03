@@ -6,15 +6,15 @@ var json_path= './vending.json';
 
 app.use(bodyParser.json());
 
-app.use('/config', express.static(__dirname + '/public'));
+app.use('/', express.static(__dirname + '/public'));
 app.use('/static', express.static(__dirname + '/static'));
 
-app.get('/', function (req, res) {
+app.get('/data', function (req, res) {
 	console.dir(jsonfile.readFileSync(json_path));
 	res.send(jsonfile.readFileSync(json_path));
 });
 
-app.post('/', function (req, res) {
+app.post('/data', function (req, res) {
   res.send('Got a POST request');
   console.log(req.body);
   if (json_path) {
@@ -31,6 +31,6 @@ app.get('/locations/:id', function(req, res) {
   // Use TTS library to "speak" product name and price
 });
 
-app.listen(80, function () {
-  console.log('Data interpreter listening on port 80!');
+app.listen(3000, function () {
+  console.log('Data interpreter listening on port 3000!');
 });
